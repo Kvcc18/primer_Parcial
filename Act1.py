@@ -1,4 +1,3 @@
-
 #Karla Vianey De la Cruz Cicler
 
 import Crypto.Util.number
@@ -41,10 +40,6 @@ msg = "They say the sun a na shine for all But in some people world It never shi
 print("Mensaje original: ", msg, "\n")
 print("Longitud del mensaje en bytes: ", len(msg.encode('utf-8')))
 
-#Convertir el mensaje a número
-m = int.from_bytes(msg.encode('utf-8'), byteorder = 'big')
-print("Mensaje convertido en entero: ", m, "\n")
-
 #Dividir el mensaje en partes de 128 caracteres
 mensajes_cifrados = []
 for i in range(0, len(msg), 128):
@@ -57,15 +52,15 @@ for i in range(0, len(msg), 128):
     m_parte_bytes = int.to_bytes(des, 128, byteorder='big') 
     m_parte_bytes = m_parte_bytes.lstrip(b'\x00')
     print(m_parte_bytes, "\n")
-    
-#Convertimos el mensaje de número a texto
-msg_final = int.to_bytes(des, len(msg), byteorder = 'big').decode('utf-8')
-print("Mensaje final: ", msg_final, "\n")
+    mensajes_cifrados.append(m_parte_bytes)
+    mensaje_cifrado_unido = b''.join(mensajes_cifrados)
+
+print("Mensaje cifrado unido: ", mensaje_cifrado_unido, "\n")
 
 #Generar hash del mensaje
 hash_object = hashlib.sha256(msg.encode())
 hex_dig = hash_object.hexdigest()
-print("Hash del mensaje: ", hex_dig, "\n")
+print("Hash del mensaje unido: ", hex_dig, "\n")
 
 #Convertir Hash a numero
 m_int = int(hex_dig, 16)
